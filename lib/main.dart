@@ -22,6 +22,9 @@ class MyHomePage extends StatelessWidget {
         id: 't2', title: 'GSchock Watch', amount: 599.9, date: DateTime.now())
   ];
 
+  var titleInput; // this way flutter will complain because MyHomePage is StatelessWidget
+  var amountInput; // this way flutter will complain because MyHomePage is StatelessWidget
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,14 +53,21 @@ class MyHomePage extends StatelessWidget {
                     children: [
                       TextField(
                         decoration: InputDecoration(labelText: 'Title'),
+                        onChanged: (value) {
+                          titleInput = value;
+                        },
                       ),
                       TextField(
                         decoration: InputDecoration(labelText: 'Amount'),
+                        onChanged: (value) {
+                          amountInput = value;
+                        },
                       ),
                       FlatButton(
                           padding: EdgeInsets.symmetric(vertical: 10),
                           onPressed: () {
-                            print('Add Transaction');
+                            print(
+                                'Add Transaction..... $titleInput - $amountInput');
                           },
                           child: Text(
                             'Add Transaction',
