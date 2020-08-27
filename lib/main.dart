@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import './transaction.dart';
+import './widgets/user_transactions.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,20 +14,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction(
-        id: 't1', title: 'Nike Shoes', amount: 299.9, date: DateTime.now()),
-    Transaction(
-        id: 't2', title: 'GSchock Watch', amount: 599.9, date: DateTime.now())
-  ];
-
-  // var titleInput; // this way flutter will complain because MyHomePage is StatelessWidget
-  // var amountInput; // this way flutter will complain because MyHomePage is StatelessWidget
-
-  // the following is better approach - this way, flutter will not complain
-  final titleInput = TextEditingController();
-  final amountInput = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,79 +33,7 @@ class MyHomePage extends StatelessWidget {
                 elevation: 5,
               ),
             ),
-            Card(
-                elevation: 5,
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      TextField(
-                        decoration: InputDecoration(labelText: 'Title'),
-                        // onChanged: (value) {
-                        //   titleInput = value;
-                        // },
-                        controller: titleInput,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(labelText: 'Amount'),
-                        // onChanged: (value) {
-                        //   amountInput = value;
-                        // },
-                        controller: amountInput,
-                      ),
-                      FlatButton(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          onPressed: () {
-                            print(
-                                'Add Transaction..... ${titleInput.text} - ${amountInput.text}');
-                          },
-                          child: Text(
-                            'Add Transaction',
-                            style: TextStyle(color: Colors.blue),
-                          ))
-                    ],
-                  ),
-                )),
-            Column(
-              children: transactions.map((tx) {
-                return Card(
-                  child: Row(
-                    children: [
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.purple, width: 2)),
-                        child: Text(
-                          '\$ ${tx.amount}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.purple),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            tx.title,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                          Text(
-                            new DateFormat().format(tx.date),
-                            // new DateFormat('yyyy-mm-dd').format(tx.date),  // you can also do this
-                            style: TextStyle(color: Colors.grey),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                );
-              }).toList(),
-            )
+            UserTransactions()
           ],
         ));
   }
