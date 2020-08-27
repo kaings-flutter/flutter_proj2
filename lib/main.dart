@@ -22,8 +22,12 @@ class MyHomePage extends StatelessWidget {
         id: 't2', title: 'GSchock Watch', amount: 599.9, date: DateTime.now())
   ];
 
-  var titleInput; // this way flutter will complain because MyHomePage is StatelessWidget
-  var amountInput; // this way flutter will complain because MyHomePage is StatelessWidget
+  // var titleInput; // this way flutter will complain because MyHomePage is StatelessWidget
+  // var amountInput; // this way flutter will complain because MyHomePage is StatelessWidget
+
+  // the following is better approach - this way, flutter will not complain
+  final titleInput = TextEditingController();
+  final amountInput = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -53,21 +57,23 @@ class MyHomePage extends StatelessWidget {
                     children: [
                       TextField(
                         decoration: InputDecoration(labelText: 'Title'),
-                        onChanged: (value) {
-                          titleInput = value;
-                        },
+                        // onChanged: (value) {
+                        //   titleInput = value;
+                        // },
+                        controller: titleInput,
                       ),
                       TextField(
                         decoration: InputDecoration(labelText: 'Amount'),
-                        onChanged: (value) {
-                          amountInput = value;
-                        },
+                        // onChanged: (value) {
+                        //   amountInput = value;
+                        // },
+                        controller: amountInput,
                       ),
                       FlatButton(
                           padding: EdgeInsets.symmetric(vertical: 10),
                           onPressed: () {
                             print(
-                                'Add Transaction..... $titleInput - $amountInput');
+                                'Add Transaction..... ${titleInput.text} - ${amountInput.text}');
                           },
                           child: Text(
                             'Add Transaction',
