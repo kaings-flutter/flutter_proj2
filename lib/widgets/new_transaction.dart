@@ -27,6 +27,7 @@ class NewTransaction extends StatelessWidget {
                 //   titleInput = value;
                 // },
                 controller: titleInput,
+                onSubmitted: (_) => submittedData(),
               ),
               TextField(
                 decoration: InputDecoration(labelText: 'Amount'),
@@ -36,7 +37,7 @@ class NewTransaction extends StatelessWidget {
                 controller: amountInput,
                 keyboardType: TextInputType
                     .number, // limit the input type (floating keyboard) to number only
-                onSubmitted: (_) => submittedData,
+                onSubmitted: (_) => submittedData(),
               ),
               FlatButton(
                   padding: EdgeInsets.symmetric(vertical: 10),
