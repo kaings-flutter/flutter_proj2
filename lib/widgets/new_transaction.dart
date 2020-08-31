@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class NewTransaction extends StatelessWidget {
   final titleInput = TextEditingController();
@@ -6,6 +7,10 @@ class NewTransaction extends StatelessWidget {
   final Function addTransaction;
 
   NewTransaction(this.addTransaction);
+
+  void submittedData() {
+    addTransaction(titleInput.text, double.parse(amountInput.text));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +34,13 @@ class NewTransaction extends StatelessWidget {
                 //   amountInput = value;
                 // },
                 controller: amountInput,
+                keyboardType: TextInputType
+                    .number, // limit the input type (floating keyboard) to number only
+                onSubmitted: (_) => submittedData,
               ),
               FlatButton(
                   padding: EdgeInsets.symmetric(vertical: 10),
-                  onPressed: () {
-                    addTransaction(
-                        titleInput.text, double.parse(amountInput.text));
-                  },
+                  onPressed: submittedData,
                   child: Text(
                     'Add Transaction',
                     style: TextStyle(color: Colors.blue),
