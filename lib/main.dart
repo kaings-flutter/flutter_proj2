@@ -9,9 +9,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter App',
-      home: MyHomePage(),
-    );
+        title: 'Flutter App',
+        home: MyHomePage(),
+        theme: ThemeData(
+            // primarySwatch -- diversify colors by their shades
+            primarySwatch: Colors.purple,
+            // some additional color that combines with primarySwatch
+            accentColor: Colors.amber));
   }
 }
 
@@ -54,6 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context)
+            .primaryColorDark, // using the shade of one primary Theme color
         title: Text('Flutter App'),
         actions: [
           IconButton(
@@ -70,7 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
               margin: EdgeInsets.all(5),
               width: double.infinity,
               child: Card(
-                color: Colors.blue,
+                color: Theme.of(context)
+                    .primaryColorLight, // using the shade of one primary Theme color
                 child: Text('Chart'),
                 elevation: 5,
               ),
