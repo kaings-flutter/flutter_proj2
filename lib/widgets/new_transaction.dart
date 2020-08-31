@@ -26,6 +26,9 @@ class _NewTransactionState extends State<NewTransaction> {
     }
 
     widget.addTransaction(titleInput.text, double.parse(amountInput.text));
+
+    // close the bottomSheet after add transaction
+    Navigator.of(context).pop();
   }
 
   @override
