@@ -28,6 +28,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // final List<Transaction> _userTransactions = [
+  //   Transaction(
+  //       id: 't1',
+  //       title: 'Nike Shoes',
+  //       amount: 299.9,
+  //       date: DateTime.now().subtract(Duration(days: 1))),
+  //   Transaction(
+  //       id: 't2',
+  //       title: 'GSchock Watch',
+  //       amount: 599.9,
+  //       date: DateTime.now().subtract(Duration(days: 2)))
+  // ];
+
   final List<Transaction> _userTransactions = [
     Transaction(
         id: 't1', title: 'Nike Shoes', amount: 299.9, date: DateTime.now()),
@@ -37,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Transaction> get _recentTransactions {
     return _userTransactions.where((transaction) {
+      // similar to filter method of Javascript
       return transaction.date
           .isAfter(transaction.date.subtract(Duration(days: 7)));
     }).toList();
