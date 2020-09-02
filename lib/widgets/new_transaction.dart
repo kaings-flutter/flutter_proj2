@@ -58,13 +58,14 @@ class _NewTransactionState extends State<NewTransaction> {
                     .number, // limit the input type (floating keyboard) to number only
                 onSubmitted: (_) => submittedData(),
               ),
-              FlatButton(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  onPressed: submittedData,
-                  child: Text(
-                    'Add Transaction',
-                    style: TextStyle(color: Colors.blue),
-                  ))
+              RaisedButton(
+                onPressed: submittedData,
+                child: Text(
+                  'Add Transaction',
+                ),
+                color: Theme.of(context).primaryColor,
+                textColor: Theme.of(context).textTheme.button.color,
+              ),
             ],
           ),
         ));
