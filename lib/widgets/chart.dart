@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../widgets/chart_bar.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 
@@ -28,16 +30,30 @@ class Chart extends StatelessWidget {
     });
   }
 
+  double get maxWeeklySpending {
+    return groupedTransactions.fold(0.0, (totalWeekly, transaction) {
+      return totalWeekly + transaction['amount'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     print('groupedTransactions..... ${groupedTransactions.toString()}');
 
-    return Card(
-      elevation: 5,
-      margin: EdgeInsets.all(20),
-      child: Row(
-        children:
-            groupedTransactions.map((tx) => Text('tx - ${tx['day']}')).toList(),
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.all(10),
+      child: Card(
+        elevation: 5,
+        child: Row(
+            children: groupedTransactions.map((tx) {
+          return ChartBar(
+              label: tx['day'],
+              amount: tx['amount'],
+              totalShare: maxWeeklySpending == 0.0
+                  ? 0.0
+                  : (tx['amount'] as double) / maxWeeklySpending);
+        }).toList()),
       ),
     );
   }
