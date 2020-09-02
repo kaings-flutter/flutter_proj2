@@ -44,17 +44,24 @@ class Chart extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.all(10),
       child: Card(
-        elevation: 5,
-        child: Row(
-            children: groupedTransactions.map((tx) {
-          return ChartBar(
-              label: tx['day'],
-              amount: tx['amount'],
-              totalShare: maxWeeklySpending == 0.0
-                  ? 0.0
-                  : (tx['amount'] as double) / maxWeeklySpending);
-        }).toList()),
-      ),
+          elevation: 5,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: groupedTransactions.map((tx) {
+                  return Flexible(
+                    fit: FlexFit
+                        .tight, // 'tight' to make sure the child column won't grow, 'loose' to make the child flexible to expand as its content grows
+                    child: ChartBar(
+                        label: tx['day'],
+                        amount: tx['amount'],
+                        totalShare: maxWeeklySpending == 0.0
+                            ? 0.0
+                            : (tx['amount'] as double) / maxWeeklySpending),
+                  );
+                }).toList()),
+          )),
     );
   }
 }
