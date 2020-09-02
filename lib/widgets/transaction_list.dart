@@ -19,37 +19,22 @@ class TransactionList extends StatelessWidget {
           itemBuilder: (buildCtx, idx) {
             // idx refers to index of the list items
             return Card(
-              child: Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.purple, width: 2)),
-                    child: Text(
-                      '\$ ${transactions[idx].amount}',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.purple),
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        transactions[idx].title,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+              elevation: 5,
+              margin: EdgeInsets.all(5),
+              child: ListTile(
+                // alternative to row
+                leading: CircleAvatar(
+                    radius: 30,
+                    child: Padding(
+                      padding: EdgeInsets.all(5),
+                      child: FittedBox(
+                        child: Text('\$${transactions[idx].amount}'),
                       ),
-                      Text(
-                        new DateFormat().format(transactions[idx].date),
-                        // new DateFormat('yyyy-mm-dd').format(tx.date),  // you can also do this
-                        style: TextStyle(color: Colors.grey),
-                      )
-                    ],
-                  )
-                ],
+                    )),
+                title: Text(transactions[idx].title,
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                subtitle:
+                    Text(DateFormat.yMMMd().format(transactions[idx].date)),
               ),
             );
           },
