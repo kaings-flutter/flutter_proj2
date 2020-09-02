@@ -13,10 +13,15 @@ class MyApp extends StatelessWidget {
         title: 'Flutter App',
         home: MyHomePage(),
         theme: ThemeData(
-            // primarySwatch -- diversify colors by their shades
-            primarySwatch: Colors.purple,
-            // some additional color that combines with primarySwatch
-            accentColor: Colors.amber));
+          // primarySwatch -- diversify colors by their shades
+          primarySwatch: Colors.purple,
+          // some additional color that combines with primarySwatch
+          accentColor: Colors.amber,
+          // set theme for text
+          textTheme: ThemeData.light().textTheme.copyWith(
+              // preset button style. Rewrite default button color to white
+              button: TextStyle(color: Colors.white)),
+        ));
   }
 }
 
