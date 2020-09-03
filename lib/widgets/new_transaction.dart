@@ -23,11 +23,12 @@ class _NewTransactionState extends State<NewTransaction> {
     final inputTitle = _titleInput.text;
     final inputAmount = double.parse(_amountInput.text);
 
-    if (inputTitle.isEmpty || inputAmount <= 0) {
+    if (inputTitle.isEmpty || inputAmount <= 0 || _selectedDate == null) {
       return;
     }
 
-    widget.addTransaction(_titleInput.text, double.parse(_amountInput.text));
+    widget.addTransaction(
+        _titleInput.text, double.parse(_amountInput.text), _selectedDate);
 
     // close the bottomSheet after add transaction
     Navigator.of(context).pop();
