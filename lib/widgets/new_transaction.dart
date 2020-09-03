@@ -81,9 +81,11 @@ class _NewTransactionState extends State<NewTransaction> {
               Container(
                 child: Row(
                   children: [
-                    Text((_selectedDate == null)
-                        ? 'No Date Chosen!'
-                        : DateFormat.yMMMMd().format(_selectedDate)),
+                    Expanded(
+                      child: Text((_selectedDate == null)
+                          ? 'No Date Chosen!'
+                          : DateFormat.yMMMMd().format(_selectedDate)),
+                    ),
                     FlatButton(
                         onPressed: _showDatePicker,
                         child: Text(
