@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './widgets/transaction_list.dart';
@@ -98,49 +101,72 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
+    final isIOS = Platform.isIOS;
 
-    final appBar = AppBar(
-      backgroundColor: Theme.of(context)
-          .primaryColorDark, // using the shade of one primary Theme color
-      title: Text('Flutter App'),
-      actions: [
-        IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _startAddNewTransaction(context))
-      ],
-    );
+    // specify the type to avoid error (preferredSize)
+    final PreferredSizeWidget appBar = isIOS
+        ? CupertinoNavigationBar(
+            middle: Text('Personal Expenses'),
+            trailing: Row(
+              mainAxisSize: MainAxisSize
+                  .min, // to minimize the row size to fit its content only
+              children: [
+                GestureDetector(
+                  onTap: () => _startAddNewTransaction(context),
+                  child: Icon(CupertinoIcons.add),
+                )
+              ],
+            ),
+          )
+        : AppBar(
+            backgroundColor: Theme.of(context)
+                .primaryColorDark, // using the shade of one primary Theme color
+            title: Text('Personal Expenses'),
+            actions: [
+              IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () => _startAddNewTransaction(context))
+            ],
+          );
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (!isLandscape)
-              Container(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.3,
-                child: Chart(_recentTransactions),
-              ),
+    final pageBody = SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (!isLandscape)
             Container(
               height: (MediaQuery.of(context).size.height -
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
-                  0.7,
-              child: TransactionList(_userTransactions, _deleteTransaction),
-            )
-          ],
-        ),
+                  0.3,
+              child: Chart(_recentTransactions),
+            ),
+          Container(
+            height: (MediaQuery.of(context).size.height -
+                    appBar.preferredSize.height -
+                    MediaQuery.of(context).padding.top) *
+                0.7,
+            child: TransactionList(_userTransactions, _deleteTransaction),
+          )
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _startAddNewTransaction(context),
-        child: Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation
-          .centerFloat, // to adjust floatingActionButton alignment/location
     );
+
+    return isIOS
+        ? CupertinoPageScaffold(
+            child: pageBody,
+            navigationBar: appBar,
+          )
+        : Scaffold(
+            appBar: appBar,
+            body: pageBody,
+            floatingActionButton: FloatingActionButton(
+              onPressed: () => _startAddNewTransaction(context),
+              child: Icon(Icons.add),
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation
+                .centerFloat, // to adjust floatingActionButton alignment/location
+          );
   }
 }
