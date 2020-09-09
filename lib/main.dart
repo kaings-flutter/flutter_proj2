@@ -41,7 +41,7 @@ class MyHomePage extends StatefulWidget {
   }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   // final List<Transaction> _userTransactions = [
   //   Transaction(
   //       id: 't1',
@@ -99,19 +99,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    WidgetsBinding.instance.addObserver(this); // setup an observer
     super.initState();
   }
 
   @override
   void didUpdateWidget(MyHomePage oldWidget) {
     // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
+    // super.didUpdateWidget(oldWidget);
+  }
+
+  // when there is any change in applifecycle, it will trigger the following method (like an observer)
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print('state..... $state');
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    WidgetsBinding.instance.removeObserver(
+        this); // remove the AppLifecyclestate listener (unsubscribe the observer)
     super.dispose();
   }
 
